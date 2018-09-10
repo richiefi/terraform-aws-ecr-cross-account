@@ -8,6 +8,11 @@ variable "create" {
   default     = true
 }
 
+variable "create_repo" {
+  description = "create defines if the named repository needs to be created true/false"
+  default     = false
+}
+
 variable "use_namespaces" {
   description = "use_namespaces defines if we want to interpolate the namespace inside the repo name"
   default     = false

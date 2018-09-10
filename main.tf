@@ -4,7 +4,7 @@ locals {
 
 # aws_ecr_repository creates the aws_ecr_repository resource
 resource "aws_ecr_repository" "this" {
-  count = "${var.create ? 1 : 0 }"
+  count = "${var.create && var.create_repo ? 1 : 0 }"
   name  = "${local.ecr_repo_name}"
 }
 
@@ -73,7 +73,7 @@ data "aws_iam_policy_document" "ecr_read_and_write_perms" {
 # be used to populate the iam policy.
 resource "aws_ecr_repository_policy" "this" {
   count      = "${var.create ? 1 : 0 }"
-  repository = "${aws_ecr_repository.this.name}"
+  repository = "${local.ecr_repo_name}"
 
   policy = "${length(var.allowed_write_principals) > 0
               ? data.aws_iam_policy_document.ecr_read_and_write_perms.json
@@ -91,7 +91,7 @@ data "template_file" "lifecycle_policy_rules" {
 # The final rendered lifecycle_policy will be regexed to remove the double quotes surrounding strings
 resource "aws_ecr_lifecycle_policy" "this" {
   count      = "${var.create && var.lifecycle_policy_rules_count > 0 ? 1 : 0 }"
-  repository = "${aws_ecr_repository.this.name}"
+  repository = "${local.ecr_repo_name}"
 
   policy = "${replace("{\"rules\": [${join(",",data.template_file.lifecycle_policy_rules.*.rendered)}]}",
 		 "/\"(true|false|[[:digit:]]+)\"/", "$1"

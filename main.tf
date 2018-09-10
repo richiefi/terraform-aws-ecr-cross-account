@@ -13,7 +13,7 @@ data "aws_iam_policy_document" "ecs_ecr_read_perms" {
   count = "${var.create ? 1 : 0 }"
 
   statement {
-    sid = "ECRREad"
+    sid = "ECRRead"
 
     effect = "Allow"
 

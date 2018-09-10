@@ -1,5 +1,6 @@
 variable "namespace" {
   description = "The namespace we interpolate in all resources"
+  default = ""
 }
 
 variable "create" {
@@ -9,7 +10,7 @@ variable "create" {
 
 variable "use_namespaces" {
   description = "use_namespaces defines if we want to interpolate the namespace inside the repo name"
-  default     = true
+  default     = false
 }
 
 # The name of the ECR repository

@@ -1,6 +1,6 @@
 variable "namespace" {
   description = "The namespace we interpolate in all resources"
-  default = ""
+  default     = ""
 }
 
 variable "create" {
@@ -25,12 +25,12 @@ variable "name" {
 
 variable "allowed_read_principals" {
   description = "allowed_read_principals defines which external principals are allowed to read from the ECR repository"
-  type        = "list"
+  type        = list(string)
 }
 
 variable "allowed_write_principals" {
   description = "allowed_write_principals defines which external principals are allowed to write to the ECR repository"
-  type        = "list"
+  type        = list(string)
   default     = []
 }
 
@@ -43,3 +43,4 @@ variable "lifecycle_policy_rules" {
   description = "List of json lifecycle policy rules, created by another module: doingcloudright/ecr-lifecycle-policy-rule/aws"
   default     = []
 }
+
